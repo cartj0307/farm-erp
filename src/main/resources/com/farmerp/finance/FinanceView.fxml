@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.farmerp.finance.FinanceController" spacing="8">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Farm"/>
+        <ComboBox fx:id="farmCombo" prefWidth="200" promptText="Pick a farm"/>
+    </HBox>
+
+    <!-- FR-13 working capital through to harvest -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Working capital through harvest on" style="-fx-font-weight: bold;"/>
+        <DatePicker fx:id="harvestPicker" prefWidth="130"/>
+        <Label fx:id="workingCapitalLabel"/>
+    </HBox>
+    <Label fx:id="workingCapitalDetail" style="-fx-text-fill: #555555;"/>
+
+    <TabPane fx:id="financeTabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <!-- UC-8 cash on hand -->
+        <Tab text="Cash on hand">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <Label fx:id="currentCashLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <TableView fx:id="cashTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="cashDateCol" text="Date" prefWidth="120"/>
+                        <TableColumn fx:id="cashBalanceCol" text="Balance" prefWidth="140"/>
+                    </columns>
+                    <placeholder><Label text="No cash entries for this farm yet."/></placeholder>
+                </TableView>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="90"/>
+                        <ColumnConstraints minWidth="200"/>
+                    </columnConstraints>
+                    <Label text="Date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="cashDatePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Balance ($)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="cashBalanceField" promptText="Example: 48500.00" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+                <HBox spacing="8">
+                    <Button text="New entry" onAction="#onNewCash"/>
+                    <Button text="Save entry" onAction="#onSaveCash"/>
+                    <Button fx:id="deleteCashButton" text="Delete entry" onAction="#onDeleteCash"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- UC-9 loans -->
+        <Tab text="Loans">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <TableView fx:id="loanTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="lenderCol" text="Lender" prefWidth="142"/>
+                        <TableColumn fx:id="principalCol" text="Principal" prefWidth="105"/>
+                        <TableColumn fx:id="rateCol" text="Rate" prefWidth="60"/>
+                        <TableColumn fx:id="startCol" text="Start" prefWidth="95"/>
+                        <TableColumn fx:id="termCol" text="Term" prefWidth="65"/>
+                        <TableColumn fx:id="paymentCol" text="Monthly" prefWidth="95"/>
+                        <TableColumn fx:id="firstPaymentCol" text="First payment" prefWidth="108"/>
+                        <TableColumn fx:id="interestCol" text="Total interest" prefWidth="110"/>
+                    </columns>
+                    <placeholder><Label text="No loans for this farm yet."/></placeholder>
+                </TableView>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="110"/>
+                        <ColumnConstraints minWidth="190"/>
+                        <ColumnConstraints minWidth="130"/>
+                        <ColumnConstraints minWidth="190"/>
+                    </columnConstraints>
+                    <Label text="Lender" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="lenderField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Principal ($)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="principalField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Interest rate (%)" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="rateField" promptText="Example: 6.5" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Start date" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                    <DatePicker fx:id="startPicker" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                    <Label text="Term (months)" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                    <TextField fx:id="termField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                    <Label text="Monthly payment ($)" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <TextField fx:id="paymentField" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                    <Label text="First payment" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                    <DatePicker fx:id="firstPaymentPicker" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                </GridPane>
+                <HBox spacing="8">
+                    <Button text="New loan" onAction="#onNewLoan"/>
+                    <Button text="Save loan" onAction="#onSaveLoan"/>
+                    <Button fx:id="deleteLoanButton" text="Delete loan" onAction="#onDeleteLoan"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- UC-10 bills -->
+        <Tab text="Bills">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Label fx:id="unpaidTotalLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <CheckBox fx:id="showPaidCheck" text="Show paid bills"/>
+                </HBox>
+                <TableView fx:id="billTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="dueCol" text="Due date" prefWidth="110"/>
+                        <TableColumn fx:id="payeeCol" text="Payee" prefWidth="250"/>
+                        <TableColumn fx:id="billAmountCol" text="Amount" prefWidth="120"/>
+                        <TableColumn fx:id="statusCol" text="Status" prefWidth="90"/>
+                    </columns>
+                    <placeholder><Label text="No unpaid bills for this farm."/></placeholder>
+                </TableView>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="90"/>
+                        <ColumnConstraints minWidth="220"/>
+                        <ColumnConstraints minWidth="90"/>
+                        <ColumnConstraints minWidth="160"/>
+                    </columnConstraints>
+                    <Label text="Payee" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="payeeField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Amount ($)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="billAmountField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Due date" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                    <DatePicker fx:id="duePicker" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                </GridPane>
+                <HBox spacing="8">
+                    <Button text="New bill" onAction="#onNewBill"/>
+                    <Button text="Save bill" onAction="#onSaveBill"/>
+                    <Button fx:id="paidButton" text="Mark paid" onAction="#onTogglePaid"/>
+                    <Button fx:id="deleteBillButton" text="Delete bill" onAction="#onDeleteBill"/>
+                </HBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+</VBox>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.farmerp.summary.SummaryController" spacing="8">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <!-- UC-11 step 2: pick farm and crop year -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Farm"/>
+        <ComboBox fx:id="farmCombo" prefWidth="200" promptText="Pick a farm"/>
+        <Label text="Crop year"/>
+        <Spinner fx:id="yearSpinner" editable="true" prefWidth="100"/>
+    </HBox>
+
+    <VBox fx:id="summaryPane" spacing="8" VBox.vgrow="ALWAYS">
+        <Label fx:id="farmTotalsLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <Label fx:id="farmNetLabel"/>
+
+        <!-- FR-14, FR-15, FR-16 by field -->
+        <TableView fx:id="fieldTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="fieldCol" text="Field" prefWidth="130"/>
+                <TableColumn fx:id="acresCol" text="Acres" prefWidth="65"/>
+                <TableColumn fx:id="cropCol" text="Crop" prefWidth="110"/>
+                <TableColumn fx:id="costCol" text="Total cost" prefWidth="110"/>
+                <TableColumn fx:id="costPerAcreCol" text="Cost per acre" prefWidth="105"/>
+                <TableColumn fx:id="revenueCol" text="Revenue" prefWidth="110"/>
+                <TableColumn fx:id="netCol" text="Net return" prefWidth="110"/>
+                <TableColumn fx:id="netPerAcreCol" text="Net per acre" prefWidth="105"/>
+            </columns>
+            <placeholder><Label text="This farm has no fields yet."/></placeholder>
+        </TableView>
+        <Label text="Click a field to see its costs by category. Revenue and net are blank until a yield is entered."
+               style="-fx-text-fill: #666666;"/>
+
+        <HBox spacing="16" minHeight="235" prefHeight="235">
+            <!-- FR-14 by category -->
+            <VBox spacing="6" prefWidth="460">
+                <Label fx:id="categoryHeader" text="Costs by category" style="-fx-font-weight: bold;"/>
+                <TableView fx:id="categoryTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="categoryCol" text="Category" prefWidth="170"/>
+                        <TableColumn fx:id="categoryAmountCol" text="Amount" prefWidth="140"/>
+                        <TableColumn fx:id="categoryShareCol" text="Share" prefWidth="100"/>
+                    </columns>
+                    <placeholder><Label text="No costs for this crop year."/></placeholder>
+                </TableView>
+            </VBox>
+
+            <Separator orientation="VERTICAL"/>
+
+            <!-- UC-11 steps 4 and 5: working capital (FR-13) -->
+            <VBox spacing="8">
+                <Label text="Working capital through harvest" style="-fx-font-weight: bold;"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Harvest date"/>
+                    <DatePicker fx:id="harvestPicker" prefWidth="130"/>
+                </HBox>
+                <Label fx:id="workingCapitalLabel"/>
+                <Label fx:id="workingCapitalDetail" style="-fx-text-fill: #555555;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+</VBox>

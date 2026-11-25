@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.farmerp.yields.YieldsController" spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <!-- Select field (included by UC-6 and UC-7) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Farm"/>
+        <ComboBox fx:id="farmCombo" prefWidth="200" promptText="Pick a farm"/>
+        <Label text="Field"/>
+        <ComboBox fx:id="fieldCombo" prefWidth="200" promptText="Pick a field"/>
+    </HBox>
+
+    <VBox fx:id="yieldPane" spacing="8" VBox.vgrow="ALWAYS">
+
+        <!-- UC-6 enter yield -->
+        <TableView fx:id="yieldTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="yearCol" text="Crop year" prefWidth="80"/>
+                <TableColumn fx:id="cropCol" text="Crop" prefWidth="110"/>
+                <TableColumn fx:id="harvestCol" text="Harvested" prefWidth="100"/>
+                <TableColumn fx:id="totalCol" text="Total yield" prefWidth="140"/>
+                <TableColumn fx:id="perAcreCol" text="Per acre" prefWidth="110"/>
+                <TableColumn fx:id="priceCol" text="Price per unit" prefWidth="115"/>
+                <TableColumn fx:id="revenueCol" text="Revenue" prefWidth="120"/>
+            </columns>
+            <placeholder><Label text="No yields for this field yet."/></placeholder>
+        </TableView>
+
+        <GridPane hgap="8" vgap="6">
+            <columnConstraints>
+                <ColumnConstraints minWidth="90"/>
+                <ColumnConstraints minWidth="190"/>
+                <ColumnConstraints minWidth="110"/>
+                <ColumnConstraints minWidth="190"/>
+                <ColumnConstraints minWidth="100"/>
+                <ColumnConstraints minWidth="130"/>
+            </columnConstraints>
+            <Label text="Crop year" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="yearSpinner" editable="true" prefWidth="100" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Crop" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="cropCombo" editable="true" promptText="Pick or type" prefWidth="180" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Harvest date" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <DatePicker fx:id="harvestPicker" prefWidth="180" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+            <Label text="Total yield" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <TextField fx:id="totalField" promptText="Whole field, not per acre" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label text="Unit" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+            <ComboBox fx:id="unitCombo" prefWidth="130" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+            <Label text="Price per unit ($)" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
+            <TextField fx:id="priceField" promptText="Example: 4.35" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
+        </GridPane>
+        <HBox spacing="8">
+            <Button text="New yield" onAction="#onNew"/>
+            <Button text="Save yield" onAction="#onSave"/>
+            <Button fx:id="deleteButton" text="Delete yield" onAction="#onDelete"/>
+        </HBox>
+
+        <Separator/>
+
+        <!-- UC-7 view expected yield -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Expected yield for" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="expectedCropCombo" prefWidth="150" promptText="Crop"/>
+            <Label text="in"/>
+            <Spinner fx:id="expectedYearSpinner" editable="true" prefWidth="100"/>
+            <Label text=":"/>
+            <Label fx:id="expectedLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
+</VBox>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.farmerp.costs.CostsController" spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <!-- Select field (included by UC-5) and crop year filter (FR-7) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Farm"/>
+        <ComboBox fx:id="farmCombo" prefWidth="200" promptText="Pick a farm"/>
+        <Label text="Field"/>
+        <ComboBox fx:id="fieldCombo" prefWidth="200" promptText="Pick a field"/>
+        <Label text="Crop year"/>
+        <Spinner fx:id="yearSpinner" editable="true" prefWidth="100"/>
+    </HBox>
+
+    <VBox fx:id="costPane" spacing="8" VBox.vgrow="ALWAYS">
+        <TableView fx:id="costTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="dateCol" text="Date" prefWidth="110"/>
+                <TableColumn fx:id="categoryCol" text="Category" prefWidth="120"/>
+                <TableColumn fx:id="descriptionCol" text="Description" prefWidth="330"/>
+                <TableColumn fx:id="amountCol" text="Amount" prefWidth="120"/>
+            </columns>
+            <placeholder><Label text="No costs for this field and crop year yet."/></placeholder>
+        </TableView>
+        <Label fx:id="totalLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <GridPane hgap="8" vgap="6">
+            <columnConstraints>
+                <ColumnConstraints minWidth="90"/>
+                <ColumnConstraints minWidth="200"/>
+                <ColumnConstraints minWidth="90"/>
+                <ColumnConstraints minWidth="260"/>
+            </columnConstraints>
+            <Label text="Date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="datePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Category" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="categoryCombo" promptText="Pick a category" prefWidth="200" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Amount ($)" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <TextField fx:id="amountField" promptText="Example: 1250.75" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+            <Label text="Description" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+            <TextField fx:id="descriptionField" promptText="Example: Seed corn, 30 bags" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+        </GridPane>
+        <Label text="New costs are saved to the crop year picked at the top." style="-fx-text-fill: #666666;"/>
+        <HBox spacing="8">
+            <Button text="New cost" onAction="#onNew"/>
+            <Button text="Save cost" onAction="#onSave"/>
+            <Button fx:id="deleteButton" text="Delete cost" onAction="#onDelete"/>
+        </HBox>
+    </VBox>
+</VBox>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.farmerp.fields.FieldsController" dividerPositions="0.5">
+    <items>
+
+        <!-- Farms -->
+        <VBox spacing="8">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <Label text="Farms" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <TableView fx:id="farmTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="farmNameCol" text="Name" prefWidth="160"/>
+                    <TableColumn fx:id="farmLocationCol" text="Location" prefWidth="150"/>
+                    <TableColumn fx:id="farmAcresCol" text="Total acres" prefWidth="90"/>
+                </columns>
+                <placeholder><Label text="No farms yet. Fill in the form and click Save farm."/></placeholder>
+            </TableView>
+            <GridPane hgap="8" vgap="6">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="90"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+                <Label text="Name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="farmNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Location" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="farmLocationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Total acres" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="farmAcresField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+            <HBox spacing="8">
+                <Button text="New farm" onAction="#onNewFarm"/>
+                <Button text="Save farm" onAction="#onSaveFarm"/>
+                <Button fx:id="deleteFarmButton" text="Delete farm" onAction="#onDeleteFarm"/>
+            </HBox>
+        </VBox>
+
+        <!-- Fields on the selected farm -->
+        <VBox fx:id="fieldPane" spacing="8">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <Label fx:id="fieldsHeader" text="Fields" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <TableView fx:id="fieldTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="fieldNameCol" text="Name" prefWidth="140"/>
+                    <TableColumn fx:id="fieldAcresCol" text="Acres" prefWidth="80"/>
+                    <TableColumn fx:id="fieldNotesCol" text="Notes" prefWidth="180"/>
+                </columns>
+                <placeholder><Label text="No fields yet. Fill in the form and click Save field."/></placeholder>
+            </TableView>
+            <GridPane hgap="8" vgap="6">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="90"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+                <Label text="Name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="fieldNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Acres" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="fieldAcresField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Notes" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextArea fx:id="fieldNotesArea" prefRowCount="2" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+            <HBox spacing="8">
+                <Button text="New field" onAction="#onNewField"/>
+                <Button text="Save field" onAction="#onSaveField"/>
+                <Button fx:id="deleteFieldButton" text="Delete field" onAction="#onDeleteField"/>
+            </HBox>
+        </VBox>
+
+    </items>
+</SplitPane>

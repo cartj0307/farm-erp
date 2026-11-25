@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.farmerp.records.RecordsController" spacing="10">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+
+    <!-- Select field (included by UC-3 and UC-4) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Farm"/>
+        <ComboBox fx:id="farmCombo" prefWidth="200" promptText="Pick a farm"/>
+        <Label text="Field"/>
+        <ComboBox fx:id="fieldCombo" prefWidth="200" promptText="Pick a field"/>
+    </HBox>
+
+    <TabPane fx:id="recordTabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <!-- UC-3 soil samples -->
+        <Tab text="Soil samples">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <TableView fx:id="sampleTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="sampleDateCol" text="Date" prefWidth="110"/>
+                        <TableColumn fx:id="nitrogenCol" text="N (ppm)" prefWidth="90"/>
+                        <TableColumn fx:id="phosphorusCol" text="P (ppm)" prefWidth="90"/>
+                        <TableColumn fx:id="potassiumCol" text="K (ppm)" prefWidth="90"/>
+                        <TableColumn fx:id="phCol" text="pH" prefWidth="70"/>
+                        <TableColumn fx:id="organicMatterCol" text="Organic matter (%)" prefWidth="150"/>
+                    </columns>
+                    <placeholder><Label text="No soil samples for this field yet."/></placeholder>
+                </TableView>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120"/>
+                        <ColumnConstraints minWidth="160"/>
+                        <ColumnConstraints minWidth="140"/>
+                        <ColumnConstraints minWidth="160"/>
+                    </columnConstraints>
+                    <Label text="Sample date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="sampleDatePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Nitrogen N (ppm)" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="nitrogenField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Phosphorus P (ppm)" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="phosphorusField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Potassium K (ppm)" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="potassiumField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="pH" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                    <TextField fx:id="phField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                    <Label text="Organic matter (%)" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <TextField fx:id="organicMatterField" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                    <Label text="Leave a box blank if the lab didn't test it." style="-fx-text-fill: #666666;"
+                           GridPane.rowIndex="3" GridPane.columnIndex="2" GridPane.columnSpan="2"/>
+                </GridPane>
+                <HBox spacing="8">
+                    <Button text="New sample" onAction="#onNewSample"/>
+                    <Button text="Save sample" onAction="#onSaveSample"/>
+                    <Button fx:id="deleteSampleButton" text="Delete sample" onAction="#onDeleteSample"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- UC-4 water and nutrient applications -->
+        <Tab text="Applications">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <TableView fx:id="appTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="appDateCol" text="Date" prefWidth="110"/>
+                        <TableColumn fx:id="appTypeCol" text="Type" prefWidth="110"/>
+                        <TableColumn fx:id="appProductCol" text="Product" prefWidth="200"/>
+                        <TableColumn fx:id="appAmountCol" text="Amount" prefWidth="90"/>
+                        <TableColumn fx:id="appUnitCol" text="Unit" prefWidth="110"/>
+                    </columns>
+                    <placeholder><Label text="No applications for this field yet."/></placeholder>
+                </TableView>
+                <GridPane hgap="8" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120"/>
+                        <ColumnConstraints minWidth="200"/>
+                        <ColumnConstraints minWidth="80"/>
+                        <ColumnConstraints minWidth="160"/>
+                    </columnConstraints>
+                    <Label text="Date" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="appDatePicker" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Label text="Type" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="appTypeCombo" promptText="Pick a type" prefWidth="200" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Product" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="productField" promptText="Example: Urea 46-0-0" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Amount" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                    <TextField fx:id="amountField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                    <Label text="Unit" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <ComboBox fx:id="unitCombo" editable="true" promptText="Pick or type" prefWidth="160" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                </GridPane>
+                <HBox spacing="8">
+                    <Button text="New application" onAction="#onNewApp"/>
+                    <Button text="Save application" onAction="#onSaveApp"/>
+                    <Button fx:id="deleteAppButton" text="Delete application" onAction="#onDeleteApp"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- FR-5 combined history -->
+        <Tab text="History">
+            <VBox spacing="8">
+                <padding><Insets top="10" right="0" bottom="0" left="0"/></padding>
+                <TableView fx:id="historyTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="historyDateCol" text="Date" prefWidth="110"/>
+                        <TableColumn fx:id="historyKindCol" text="Record" prefWidth="170"/>
+                        <TableColumn fx:id="historyDetailsCol" text="Details" prefWidth="480"/>
+                    </columns>
+                    <placeholder><Label text="No records for this field yet."/></placeholder>
+                </TableView>
+            </VBox>
+        </Tab>
+
+    </TabPane>
+</VBox>
